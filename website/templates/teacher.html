@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block main %}
+<main>
+  <form
+    class="form-layout"
+    method="POST"
+    action="{{ url_for('views.teacher') }}"
+  >
+    {{ form.hidden_tag() }}
+    <div class="form-row">
+      <div class="form-label">{{ form.name.label }}:</div>
+      <div class="form-input">{{ form.name }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.date.label }}:</div>
+      <div class="form-input">{{ form.date }}</div>
+    </div>
+    {{ form.submit() }}
+  </form>
+
+  <h2>Tabela de Frequência</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Aulas</th>
+        <th>Data</th>
+        <th>Alunos Presentes</th>
+        <th>Alunos Faltantes</th>
+        <th>Alunos Totais</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lesson in lessons|sort(attribute='date') %}
+      <tr>
+        <td>{{lesson.name}}</td>
+        <td>{{lesson.date.strftime('%d-%m')}}</td>
+        <td>{{lesson.students_attending|length}}</td>
+        <td>{{ students|length - lesson.students_attending|length}}</td>
+        <td>{{ students|length }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- <div class="lessons">
+    {%for lesson in lessons%}
+    <div class="date-time">
+      <p>{{lesson.name}}</p>
+      <p>{{lesson.date.strftime('%d-%m')}}</p>
+    </div>
+    {% endfor %}
+  </div> -->
+</main>
+{% endblock %}

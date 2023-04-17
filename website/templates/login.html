@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block style %}
+href="../static/css/login.css" {% endblock %}
+<!-- <p style="text-align: center"></p> -->
+{% block main %}
+<main>
+  <form
+    class="form-layout"
+    method="POST"
+    action="{{ url_for('auth.login') }}"
+  >
+    {{ form.hidden_tag() }}
+    <div class="form-row">
+      <div class="form-label">{{ form.matricula.label }}:</div>
+      <div class="form-input">{{ form.matricula(size=32) }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.password.label }}:</div>
+      <div class="form-input">{{ form.password(size=32) }}</div>
+    </div>
+    {{ form.submit() }}
+  </form>
+</main>
+{% endblock %}

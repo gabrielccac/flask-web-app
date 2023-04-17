@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>{% block title %}Base{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      {%
+      block
+      style
+      %}
+      href="../static/css/style.css"
+      {%
+      endblock
+      %}
+    />
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-links">
+        {% if user.is_authenticated %}
+          <li><a href="#">Home</a></li>
+        {% endif %}
+        <li><a href="https://github.com/gabrielccac">About</a></li>
+        <!-- <li><a href="#">Contact</a></li> -->
+      </ul>
+      <ul class="nav-btns">
+        {% if user.is_authenticated %}
+        <li>
+          <a
+            href="#"
+            class="btn login"
+            >Hello, {{user.first_name}}</a
+          >
+        </li>
+        <li>
+          <a
+            href="/logout"
+            class="btn highlight"
+            >Logout</a
+          >
+        </li>
+        {% else %}
+        <li>
+          <a
+            href="/login"
+            class="btn login"
+            >Login</a
+          >
+        </li>
+        <li>
+          <a
+            href="/sign-up"
+            class="btn highlight"
+            >Sign Up</a
+          >
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger">
+      {{ message }}
+      <button
+        type="button"
+        class="btn btn-close"
+        data-dismiss="alert"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+      {{ message }}
+      <button
+        type="button"
+        class="btn btn-close"
+        data-dismiss="alert"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %} {% block main %} {%
+    endblock %}
+    <script src="{{ url_for('static', filename='script.js')}}"></script>
+  </body>
+</html>

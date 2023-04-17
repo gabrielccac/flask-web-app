@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block main %}
+<main>
+  <h2>Tabela de Frequência de {{user.first_name}}</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Aulas</th>
+        <th>Data</th>
+        <th>Professor</th>
+        <th>Presenca</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lesson in lessons|sort(attribute = 'date') %}
+      <tr>
+        <td>{{lesson.name}}</td>
+        <td>{{lesson.date.strftime('%d-%m')}}</td>
+        {% for teacher in users|selectattr('id', 'equalto', lesson.teacher_id) %}
+        <td>{{teacher.first_name}}</td>
+        {% endfor %}
+        {% if lesson in user.lessons_attended %} 
+        <td>
+          <p>Presente</p>
+        </td>
+        {% elif lesson.date >= today %}
+        <td>
+          <a
+            href="{{ url_for('views.present', lesson_id=lesson.id) }}"
+            class="btn-present"
+            onLink=""
+          >
+            Presente
+          </a>
+        </td>
+        {% else %}
+        <td>
+          <p>Falta</p>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</main>
+{% endblock %}

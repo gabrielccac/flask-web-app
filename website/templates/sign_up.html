@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block style
+%} href="../static/css/login.css" {% endblock %}
+<!-- <p style="text-align: center"></p> -->
+{% block main %}
+<main>
+  <form
+    class="form-layout"
+    method="POST"
+    action="{{ url_for('auth.sign_up') }}"
+  >
+    {{ form.hidden_tag() }}
+    <div class="form-row names">
+      <div class="form-row">
+        <div class="form-label">{{ form.firstName.label }}:</div>
+        <div class="form-input">{{ form.firstName }}</div>
+      </div>
+      <div class="form-row">
+        <div class="form-label">{{ form.lastName.label }}:</div>
+        <div class="form-input">{{ form.lastName }}</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.email.label }}:</div>
+      <div class="form-input">{{ form.email }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.matricula.label }}:</div>
+      <div class="form-input">{{ form.matricula }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.password1.label }}:</div>
+      <div class="form-input">{{ form.password1 }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.password2.label }}</div>
+      <div class="form-input">{{ form.password2 }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">{{ form.role.label }}</div>
+      <div class="form-input">{{ form.role }}</div>
+    </div>
+    {{ form.submit() }}
+  </form>
+</main>
+{% endblock %}
